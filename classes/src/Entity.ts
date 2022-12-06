@@ -2,17 +2,21 @@ import { Position } from './Position'
 
 type EntityType = 'player' | 'food' | 'wall'
 
-export class Entity {
+export interface IEntity {
   id: string
   type: EntityType
-  position: Position = new Position()
-  trace?: Position
+  position: Position
+}
 
-  constructor(props: { id: string; type: EntityType; position?: Position; trace?: Position }) {
+export class Entity implements IEntity {
+  id
+  type
+  position = new Position()
+
+  constructor(props: { id: string; type: EntityType; position?: Position }) {
     this.id = props.id
     this.type = props.type
     this.position = props.position ?? this.position
-    this.trace = props.trace
   }
 
   /**
@@ -22,32 +26,5 @@ export class Entity {
    */
   setPosition(position: Position): Entity {
     return new Entity({ ...this, position })
-  }
-
-  /**
-   * Clear entity trace
-   */
-  clearTrace(): void {
-    if (this.trace !== undefined) {
-      delete this.trace
-      this.trace = new Position()
-    }
-  }
-
-  /**
-   * Move entity position by vector
-   *
-   * @param vector Moved vector
-   * @param area Area for fix reflections
-   * @returns New Entity instance with new Position instance
-   */
-  move(vector: Vector2, area: Vector2): Entity {
-    const newPosition = this.position.move(vector).fixReflection(area)
-
-    return new Entity({
-      ...this,
-      position: newPosition,
-      trace: this.trace?.add(this.position),
-    })
   }
 }
