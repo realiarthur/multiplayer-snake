@@ -7,7 +7,6 @@
     "build": "react-app-rewired build"
   },
   "dependencies": {
-    "classes": "file:../classes/lib",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

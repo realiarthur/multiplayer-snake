@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
-import { Entity, Position, Vector2 } from 'classes'
+import { Snake, Position, Vector2 } from 'classes'
 import { ANIMATION_DURATION, BOARD_WIDTH, BOARD_HEIGHT } from 'core/const'
 
 const entitiesInit: Entity[] = [
-  new Entity({
+  new Snake({
     id: '1',
-    type: 'player',
-    position: new Position(0, 0),
+    position: new Position([
+      { key: 0, cell: new Vector2(0, 6) },
+      { key: 1, cell: new Vector2(0, 5) },
+      { key: 2, cell: new Vector2(0, 4) },
+      { key: 3, cell: new Vector2(0, 3) },
+      { key: 4, cell: new Vector2(0, 2) },
+      { key: 5, cell: new Vector2(0, 1) },
+      { key: 6, cell: new Vector2(0, 0) },
+    ], 7),
   }),
 ]
 
