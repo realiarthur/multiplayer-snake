@@ -1,0 +1,6 @@
+.board {
+  position: relative;
+  border: 1px solid var(--c-main);
+  width: calc(var(--d-board-width) * var(--d-cell-size));
+  height: calc(var(--d-board-height) * var(--d-cell-size));
+}

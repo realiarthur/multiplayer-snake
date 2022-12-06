@@ -1,0 +1,31 @@
+.cell {
+  height: var(--d-cell-size);
+  width: var(--d-cell-size);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform var(--a-duration) linear;
+  background: var(--c-main);  
+}
+
+.trace {
+  animation: trace calc(5 * var(--a-duration)) 1 forwards;
+}
+
+@keyframes trace {
+  from {
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 0.8;
+  }
+
+  20% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: var(--a-trace-final-opacity);
+  }
+}

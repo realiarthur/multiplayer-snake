@@ -1,0 +1,36 @@
+.game {
+  height: 100vh;
+  padding: 30px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: width var(--a-duration) ease-in-out;
+  position: relative;
+  box-sizing: border-box;
+
+  & * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+.title {
+  color: var(--c-main);
+  font-weight: 300;
+  margin-bottom: 50px;
+}
+
+@media (--m-no-pointer) {
+  .game {
+    height: var(--100vh);
+  }
+
+  .title {
+    margin-bottom: 25px;
+  }
+}
