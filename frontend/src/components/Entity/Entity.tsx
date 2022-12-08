@@ -27,21 +27,24 @@ interface EntityCellsProps {
 const PositionCells: React.FC<EntityCellsProps> = ({ position, ...props }) => {
   return (
     <>
-      {position.cells.map(({ key, ...cell }) => (
-        <PositionCell key={key} {...props} {...cell} />
+      {position.cells.map((cell, index) => (
+        <PositionCell key={index} {...props} cell={cell} />
       ))}
     </>
   )
 }
 const FastPositionCells = memo(PositionCells)
 
-type EntityProps = Pick<Entity, 'position' | 'trace'>
+type EntityProps = Pick<Entity, 'position'> // | 'trace'>
 
-const Entity: React.FC<EntityProps> = ({ position, trace }) => {
+const Entity: React.FC<EntityProps> = ({
+  position,
+  // trace
+}) => {
   return (
     <>
       <FastPositionCells position={position} />
-      {trace !== undefined && <FastPositionCells position={trace} trace />}
+      {/* {trace !== undefined && <FastPositionCells position={trace} trace />} */}
     </>
   )
 }

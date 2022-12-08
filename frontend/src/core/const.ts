@@ -2,9 +2,9 @@ export enum ELEMENTS_IDS {
   ROOT_ID = 'root',
 }
 
-export const BOARD_WIDTH = 30
-export const BOARD_HEIGHT = 40
-export const CELL_SIZE = 15
+export const BOARD_WIDTH = 40
+export const BOARD_HEIGHT = 60
+export const CELL_SIZE = 10
 export const ANIMATION_DURATION = 100
 
 export const setCssConst = (

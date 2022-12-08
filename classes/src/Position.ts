@@ -1,26 +1,21 @@
 import { Vector2 } from './Vector2'
 
-type Cells = Array<{
-  key: number
-  cell: Vector2
-}>
+type Cells = Vector2[]
 
 export class Position {
-  private cellsKeyCount = 0 // garantee unique key of cells
   cells: Cells = []
 
   constructor()
   constructor(vector: Vector2)
-  constructor(cells: Cells, cellsKeyCount?: number)
+  constructor(cells: Cells)
   constructor(x: number, y: number)
-  constructor(...args: [] | [Vector2] | [Cells, number?] | [number, number]) {
+  constructor(...args: [] | [Vector2] | [Cells] | [number, number]) {
     if (args.length === 0) {
       this.cells = []
     } else if (args[0] instanceof Vector2) {
       this.push(new Vector2(args[0].x, args[0].y))
     } else if (args[0] instanceof Array) {
       this.cells = args[0]
-      this.cellsKeyCount = args[1] ?? 0
     } else {
       this.push(new Vector2(args[0], args[1]))
     }
@@ -32,7 +27,7 @@ export class Position {
    * @returns Same instance of Position
    */
   push(cell: Vector2): this {
-    this.cells.push({ key: this.cellsKeyCount++, cell })
+    this.cells.push(cell)
     return this
   }
 
@@ -44,9 +39,9 @@ export class Position {
    * @returns New instance with all cells
    */
   add(arg: Vector2 | Position): Position {
-    const newPosition = new Position([...this.cells], this.cellsKeyCount)
+    const newPosition = new Position([...this.cells])
     if (arg instanceof Position) {
-      arg.cells.forEach(({ cell }) => newPosition.push(cell))
+      arg.cells.forEach(cell => newPosition.push(cell))
     } else {
       newPosition.push(arg)
     }
@@ -60,7 +55,7 @@ export class Position {
    * @returns Same instance without intersections
    */
   remove(position: Position): this {
-    this.cells = this.cells.filter(({ cell }) => !position.intersect(cell))
+    this.cells = this.cells.filter(cell => !position.intersect(cell))
     return this
   }
 
@@ -71,9 +66,9 @@ export class Position {
    */
   intersect(area: Position | Vector2): boolean {
     if (area instanceof Vector2) {
-      return this.cells.findIndex(({ cell }) => area.equal(cell)) > -1
+      return this.cells.findIndex(cell => area.equal(cell)) > -1
     }
-    return this.cells.findIndex(({ cell }) => area.intersect(cell)) > -1
+    return this.cells.findIndex(cell => area.intersect(cell)) > -1
   }
 
   /**
@@ -82,7 +77,7 @@ export class Position {
    * @returns Same instance with  reflect cells onboard
    */
   fixReflection({ x: hSize, y: vSize }: Vector2): this {
-    this.cells.forEach(({ cell }) => {
+    this.cells.forEach(cell => {
       if (cell.x < 0) cell.x += hSize
       if (cell.x >= hSize) cell.x -= hSize
       if (cell.y < 0) cell.y += vSize
@@ -103,11 +98,11 @@ export class Position {
     // }))
 
     const newCells = [...this.cells]
-    const lastKey = newCells.pop()?.key
-    if (lastKey === undefined) return this
+    const lastCell = newCells.pop()
+    if (lastCell === undefined) return this
 
-    const cells = [{ key: lastKey, cell: newCells[0].cell.add(vector) }, ...newCells]
+    const cells = [newCells[0].add(vector), ...newCells]
 
-    return new Position(cells, this.cellsKeyCount)
+    return new Position(cells)
   }
 }
