@@ -52,6 +52,21 @@ const useEngine = (): UseEngineReturns => {
   const { entities, setDirection } = useBackendEngine()
 
   useEffect(() => {
+    const url = 'ws://localhost:8080'
+    const mywsServer = new WebSocket(url)
+
+    mywsServer.onopen = function () {
+      console.debug('send')
+      mywsServer.send('hello!!!')
+    }
+
+    mywsServer.onmessage = function (event) {
+      const { data } = event
+      console.debug({ data })
+    }
+  }, [])
+
+  useEffect(() => {
     const keyDownCallback = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'a':
