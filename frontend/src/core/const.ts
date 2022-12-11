@@ -2,14 +2,14 @@ export enum ELEMENTS_IDS {
   ROOT_ID = 'root',
 }
 
-export const BOARD_WIDTH = 40
-export const BOARD_HEIGHT = 60
+export const WS_URL = 'ws://localhost:8080'
+
 export const CELL_SIZE = 10
 export const ANIMATION_DURATION = 100
 
 export const setCssConst = (
-  boardWidth: number = BOARD_WIDTH,
-  boardHeight: number = BOARD_HEIGHT,
+  boardWidth: number,
+  boardHeight: number,
   animationDuration: number = ANIMATION_DURATION,
   cellSize: number = CELL_SIZE,
 ): void => {

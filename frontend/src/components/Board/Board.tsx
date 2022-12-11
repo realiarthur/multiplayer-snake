@@ -6,7 +6,7 @@ import { useEngineContext } from 'components/EngineProvider'
 import s from './style.module.css'
 
 const Board: React.FC = () => {
-  const { entities } = useEngineContext()
+  const { entities = [] } = useEngineContext()
   return (
     <div className={s.board}>
       <div className={cx(s.grid)}>

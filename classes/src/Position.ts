@@ -100,6 +100,7 @@ export class Position {
     const newCells = [...this.cells]
     const lastCell = newCells.pop()
     if (lastCell === undefined) return this
+    if (newCells.length === 0) return new Position([lastCell.add(vector)])
 
     const cells = [newCells[0].add(vector), ...newCells]
 

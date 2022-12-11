@@ -1,22 +1,15 @@
 import { Position } from './Position'
 
 type EntityType = 'player' | 'food' | 'wall'
+type EntityProps = { type: EntityType; position?: Position }
 
-export interface IEntity {
-  id: string
+export class Entity {
   type: EntityType
-  position: Position
-}
+  position: Position = new Position()
 
-export class Entity implements IEntity {
-  id
-  type
-  position = new Position()
-
-  constructor(props: { id: string; type: EntityType; position?: Position }) {
-    this.id = props.id
-    this.type = props.type
-    this.position = props.position ?? this.position
+  constructor({ type, position }: EntityProps) {
+    this.type = type
+    this.position = position ?? this.position
   }
 
   /**
@@ -26,5 +19,16 @@ export class Entity implements IEntity {
    */
   setPosition(position: Position): Entity {
     return new Entity({ ...this, position })
+  }
+
+  /**
+   * Move entity position by vector
+   *
+   * @param vector Moved vector
+   * @param area Area for fix reflections
+   * @returns New Entity instance with new Position instance
+   */
+  move(vector: Vector2, area: Vector2): void {
+    this.position = this.position.move(vector).fixReflection(area)
   }
 }
