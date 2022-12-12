@@ -1,24 +1,14 @@
 import React, { useContext, ReactNode } from 'react'
-import useEngine, { send, emitter } from 'core/useEngine'
+import useEngine from 'core/useEngine'
 
-type EngineContextType = Partial<ReturnType<typeof useEngine>> & {
-  send: typeof send
-  emitter: typeof emitter
-}
+type EngineContextType = Partial<ReturnType<typeof useEngine>>
 
-const EngineContext = React.createContext<EngineContextType>({
-  send,
-  emitter,
-})
+const EngineContext = React.createContext<EngineContextType>({})
 
 const EngineProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const engineValues = useEngine()
 
-  return (
-    <EngineContext.Provider value={{ ...engineValues, send, emitter }}>
-      {children}
-    </EngineContext.Provider>
-  )
+  return <EngineContext.Provider value={{ ...engineValues }}>{children}</EngineContext.Provider>
 }
 
 export default EngineProvider

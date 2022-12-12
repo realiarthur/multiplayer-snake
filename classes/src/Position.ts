@@ -66,7 +66,7 @@ export class Position {
    */
   intersect(area: Position | Vector2): boolean {
     if (area instanceof Vector2) {
-      return this.cells.findIndex(cell => area.equal(cell)) > -1
+      return this.cells.findIndex(cell => area.equal(cell) && cell !== area) > -1
     }
     return this.cells.findIndex(cell => area.intersect(cell)) > -1
   }
@@ -105,5 +105,9 @@ export class Position {
     const cells = [newCells[0].add(vector), ...newCells]
 
     return new Position(cells)
+  }
+
+  getLastCell() {
+    return this.cells?.[this.cells.length - 1]
   }
 }

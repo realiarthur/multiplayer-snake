@@ -1,5 +1,5 @@
 .game {
-  height: 100vh;
+  min-height: 100vh;
   padding: 30px;
   overflow: scroll;
   display: flex;
@@ -27,7 +27,7 @@
 
 @media (--m-no-pointer) {
   .game {
-    height: var(--100vh);
+    min-height: var(--100vh);
   }
 
   .title {

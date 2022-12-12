@@ -7,13 +7,20 @@ export const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * max)
 }
 
+type Vector2Props = [vector: Vector2] | [x?: number, y?: number]
+
 export class Vector2 {
   x: number
   y: number
 
-  constructor(x: number = 0, y: number = 0) {
-    this.x = x
-    this.y = y
+  constructor(...args: Vector2Props) {
+    if (typeof args[0] === 'object') {
+      this.x = args[0].x
+      this.y = args[0].y
+    } else {
+      this.x = args[0] ?? 0
+      this.y = args[1] ?? 0
+    }
   }
 
   /**

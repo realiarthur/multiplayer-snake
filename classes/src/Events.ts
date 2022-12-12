@@ -14,22 +14,32 @@ type InitServer = PlatformEvent<
   'INIT_SERVER',
   {
     board: Vector2
-    players: Player[]
+    entities: Entity[]
+    players?: Player[]
+    TICK_DURATION: number
   }
 >
 
 type Tick = PlatformEvent<
   'TICK',
   {
-    players: Player[]
+    players?: Player[]
+    entities: Entity[]
   }
 >
 
-export type Events = InitClient | InitServer | Tick
+type SetDirection = PlatformEvent<
+  'SET_DIRECTION',
+  {
+    direction: Vector2
+  }
+>
+
+export type Events = InitClient | InitServer | Tick | SetDirection
 
 type EventName = Events['type']
 type EventType<E extends EventName> = Extract<Events, { type: E; payload: any }>
-type EventData<E extends EventName> = EventType<E>['payload'] extends never
+export type EventData<E extends EventName> = EventType<E>['payload'] extends never
   ? null | undefined
   : EventType<E>['payload']
 
@@ -37,7 +47,7 @@ export type Send = <E extends EventName>(type: E, data: EventData<E>) => void
 
 type Emit = (event: Events) => void
 type EventCallback<E extends EventName> = (data: EventData<E>) => void
-type Subscribe = <E extends EventName>(type: E, callback: EventCallback<E>) => void
+type Subscribe = <E extends EventName>(type: E, callback: EventCallback<E>) => () => void
 
 export class Emitter {
   subscriptions: Partial<Record<EventName, EventCallback<any>[]>>
@@ -54,7 +64,9 @@ export class Emitter {
     this.subscriptions[event]?.push(callback)
 
     return () => {
-      this.subscriptions?.[event]?.filter(existCallback => existCallback === callback)
+      this.subscriptions[event] = this.subscriptions?.[event]?.filter(
+        existCallback => existCallback !== callback,
+      )
     }
   }
 

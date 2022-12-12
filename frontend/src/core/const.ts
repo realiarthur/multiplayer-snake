@@ -1,17 +1,14 @@
+import config from 'core/config'
+
 export enum ELEMENTS_IDS {
   ROOT_ID = 'root',
 }
 
-export const WS_URL = 'ws://localhost:8080'
-
-export const CELL_SIZE = 10
-export const ANIMATION_DURATION = 100
-
 export const setCssConst = (
   boardWidth: number,
   boardHeight: number,
-  animationDuration: number = ANIMATION_DURATION,
-  cellSize: number = CELL_SIZE,
+  animationDuration: number = config.ANIMATION_DURATION,
+  cellSize: number = config.CELL_SIZE,
 ): void => {
   const root = document.documentElement
 
