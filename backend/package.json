@@ -1,7 +1,7 @@
 {
   "scripts": {
     "server": "node dist/server.js",
-    "start": "npx tsc -watch >/dev/null & yarn server",
+    "start": "npx tsc -watch & yarn server",
     "build": "npx tsc"
   },
   "dependencies": {
